@@ -30,9 +30,22 @@ add_action( 'after_setup_theme', function() {
     add_theme_support( 'astra-child-theme' );
 });
 
+/**
+ * Disable Astra's default header to use custom header
+ */
+add_action( 'after_setup_theme', function() {
+	// Remove Astra's default header
+	remove_action( 'astra_header', 'astra_header_markup' );
+}, 15 );
+
 require get_stylesheet_directory() . '/inc/setup.php';
 require get_stylesheet_directory() . '/inc/enqueue.php';
+require get_stylesheet_directory() . '/inc/search-ajax.php';
+require get_stylesheet_directory() . '/inc/diagnostic.php';
 require get_stylesheet_directory() . '/inc/shortcodes.php';
 require get_stylesheet_directory() . '/inc/woocommerce-hooks.php';
 require get_stylesheet_directory() . '/inc/header-hooks.php';
 require get_stylesheet_directory() . '/inc/helpers.php';
+
+
+
