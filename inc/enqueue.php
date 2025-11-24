@@ -37,10 +37,11 @@ function kachotech_child_enqueue_scripts() {
 		'1.0'
 	);
 
-	// Homepage and section styles (load on all front-end pages to ensure availability)
-	if ( ! is_admin() ) {
+	// Homepage and section styles (load on homepage only)
+	if ( ! is_admin() && ( is_home() || is_front_page() ) ) {
 
 		// Tailwind Play CDN (provides utility classes used by hero markup)
+		// ONLY load on homepage to prevent conflicts with WooCommerce shop page
 		wp_register_script(
 			'tailwind-cdn',
 			'https://cdn.tailwindcss.com',
@@ -83,12 +84,23 @@ function kachotech_child_enqueue_scripts() {
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
 			'hero_nonce' => wp_create_nonce( 'kt_hero_nonce' ),
 		) );
+	}
 
-		// Ensure WooCommerce scripts are loaded for AJAX functionality
+	// Ensure WooCommerce scripts are loaded for AJAX functionality on all pages
+	if ( ! is_admin() ) {
 		if ( function_exists( 'wp_enqueue_cart' ) ) {
 			wp_enqueue_script( 'jquery' );
 			wp_enqueue_script( 'woocommerce' );
 		}
 	}
+
+	// Global page loader for entire site
+	wp_enqueue_script(
+		'kt-global-loader-js',
+		get_stylesheet_directory_uri() . '/assets/js/global-loader.js',
+		array( 'jquery' ),
+		'1.0',
+		true
+	);
 }
 add_action( 'wp_enqueue_scripts', 'kachotech_child_enqueue_scripts', 20 );

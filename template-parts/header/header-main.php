@@ -59,7 +59,7 @@ if ( taxonomy_exists( 'product_cat' ) ) {
             </button>
   
             <!-- Logo -->
-            <div class="kt-logo-wrap">
+            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="kt-logo-wrap">
                     <?php if ( has_custom_logo() ) : ?>
                         <span class="kt-logo-img-wrap">
                             <?php the_custom_logo(); ?>
@@ -67,8 +67,7 @@ if ( taxonomy_exists( 'product_cat' ) ) {
                     <?php else : ?>
                         <span class="kt-logo-placeholder">KachoTech</span>
                     <?php endif; ?>
-                </a>
-            </div>
+            </a>
 
             <!-- Search pill -->
             <div class="kt-search-wrap">

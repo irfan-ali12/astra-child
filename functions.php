@@ -46,6 +46,7 @@ require get_stylesheet_directory() . '/inc/shortcodes.php';
 require get_stylesheet_directory() . '/inc/woocommerce-hooks.php';
 require get_stylesheet_directory() . '/inc/header-hooks.php';
 require get_stylesheet_directory() . '/inc/helpers.php';
+require get_stylesheet_directory() . '/inc/shop-ajax.php';
 
 
 
@@ -218,5 +219,73 @@ function kt_load_featured_products() {
 
 	wp_send_json_success( array( 'html' => $html ) );
 	wp_die();
+}
+
+// Allow "per page" from query (?per_page=12 etc.)
+add_filter( 'loop_shop_per_page', function ( $cols ) {
+    if ( isset( $_GET['per_page'] ) && (int) $_GET['per_page'] > 0 ) {
+        return (int) $_GET['per_page'];
+    }
+    return $cols;
+}, 20 );
+
+//----------------------------------------
+// End of KachoTech header helpers
+//----------------------------------------
+
+// KachoTech contact form handler
+add_action( 'wp_ajax_nopriv_kt_contact_form', 'kt_handle_contact_form' );
+add_action( 'wp_ajax_kt_contact_form',        'kt_handle_contact_form' );
+
+function kt_handle_contact_form() {
+    // Basic security: allow only POST
+    if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
+        wp_send_json_error( array( 'message' => 'Invalid request.' ), 400 );
+    }
+
+    $name    = isset( $_POST['name'] )    ? sanitize_text_field( $_POST['name'] )    : '';
+    $email   = isset( $_POST['email'] )   ? sanitize_email( $_POST['email'] )        : '';
+    $phone   = isset( $_POST['phone'] )   ? sanitize_text_field( $_POST['phone'] )   : '';
+    $message = isset( $_POST['message'] ) ? sanitize_textarea_field( $_POST['message'] ) : '';
+
+    if ( empty( $name ) || empty( $email ) || empty( $message ) ) {
+        wp_send_json_error( array(
+            'message' => 'Please complete all required fields.'
+        ), 400 );
+    }
+
+    if ( ! is_email( $email ) ) {
+        wp_send_json_error( array(
+            'message' => 'Please enter a valid email address.'
+        ), 400 );
+    }
+
+    $admin_email = get_option( 'admin_email' );
+    $subject     = sprintf( 'New contact form message from %s', $name );
+
+    $body  = "You have received a new message from the KachoTech contact form.\n\n";
+    $body .= "Name: {$name}\n";
+    $body .= "Email: {$email}\n";
+    if ( ! empty( $phone ) ) {
+        $body .= "Phone: {$phone}\n";
+    }
+    $body .= "\nMessage:\n{$message}\n";
+
+    $headers = array(
+        'Content-Type: text/plain; charset=UTF-8',
+        'Reply-To: ' . $name . ' <' . $email . '>',
+    );
+
+    $sent = wp_mail( $admin_email, $subject, $body, $headers );
+
+    if ( ! $sent ) {
+        wp_send_json_error( array(
+            'message' => 'Unable to send email. Please try again later.'
+        ), 500 );
+    }
+
+    wp_send_json_success( array(
+        'message' => 'Thank you! Your message has been sent. Our team will contact you shortly.'
+    ) );
 }
 
