@@ -14,6 +14,9 @@ get_header();
 ?>
 
 <style>
+  main#main {
+    margin-top: 0px !important;
+}
   .kt-blog-archive {
     /* Scoped design tokens – no :root so no global conflicts */
     --kt-primary: #ff2446;
@@ -30,12 +33,6 @@ get_header();
     background: #ffffff;
     padding: 32px 0 56px;
     margin-top: 40px;
-  }
-
-  .kt-blog-archive .kt-wrap {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 0 16px;
   }
 
   /* Header */
@@ -479,7 +476,7 @@ get_header();
 </style>
 
 <div class="kt-blog-archive">
-  <div class="kt-wrap">
+  <div class="ast-container">
 
     <header class="kt-blog-header">
       <div class="kt-blog-breadcrumb">
@@ -677,7 +674,7 @@ get_header();
       </aside>
 
     </div><!-- .kt-blog-layout -->
-  </div><!-- .kt-wrap -->
+  </div><!-- .ast-container -->
 </div><!-- .kt-blog-archive -->
 
 <?php

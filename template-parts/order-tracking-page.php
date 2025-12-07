@@ -68,17 +68,12 @@ if ( ! $order && isset( $_GET['order_id'] ) && isset( $_GET['order_email'] ) ) {
 }
 ?>
 
-<div class="kt-order-tracking-container">
+<div class="ast-container">
     <style>
-        .kt-order-tracking-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
         .kt-tracking-header {
             text-align: center;
             margin-bottom: 40px;
+            margin-top:80px;
         }
 
         .kt-tracking-header h1 {
@@ -405,6 +400,9 @@ if ( ! $order && isset( $_GET['order_id'] ) && isset( $_GET['order_email'] ) ) {
         }
 
         @media (max-width: 768px) {
+            .kt-tracking-header{
+                margin-top:40px;
+            }
             .kt-tracking-form {
                 grid-template-columns: 1fr;
             }
@@ -685,4 +683,4 @@ if ( ! $order && isset( $_GET['order_id'] ) && isset( $_GET['order_email'] ) ) {
             </div>
         </div>
     <?php endif; ?>
-</div>
+</div><!-- .ast-container -->

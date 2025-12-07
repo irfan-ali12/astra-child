@@ -360,10 +360,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		.kt-featured-filters {
 			width: 100%;
 		}
-
-		.kt-filter-btn {
-			flex: 1;
-		}
 	}
 </style>
 
@@ -377,11 +373,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<button class="kt-filter-btn" data-category="heaters">
 				<?php esc_html_e( 'Heaters', 'astra-child' ); ?>
 			</button>
-			<button class="kt-filter-btn" data-category="electronics">
-				<?php esc_html_e( 'Electronics', 'astra-child' ); ?>
+			<button class="kt-filter-btn" data-category="home-appliances">
+				<?php esc_html_e( 'Home Appliances', 'astra-child' ); ?>
 			</button>
-			<button class="kt-filter-btn" data-category="cosmetics">
-				<?php esc_html_e( 'Cosmetics', 'astra-child' ); ?>
+			<button class="kt-filter-btn" data-category="cosmetics-personal-care">
+				<?php esc_html_e( 'Cosmetics & Personal Care', 'astra-child' ); ?>
 			</button>
 		</div>
 	</div>
@@ -400,6 +396,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		const formData = new FormData();
 		formData.append('action', 'kt_load_featured_products');
 		formData.append('category', category);
+		formData.append('timestamp', Date.now()); // Cache buster
 
 		fetch('<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>', {
 			method: 'POST',

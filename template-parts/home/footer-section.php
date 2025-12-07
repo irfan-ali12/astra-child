@@ -11,32 +11,71 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
+<style>
+	/* Mobile footer responsive styles */
+	@media (max-width: 768px) {
+		.kt-social-bar {
+			flex-direction: column !important;
+			gap: 12px !important;
+			align-items: flex-start !important;
+		}
+		
+		.kt-social-bar p {
+			width: 100% !important;
+		}
+		
+		.kt-footer-grid-responsive {
+			display: grid !important;
+			grid-template-columns: 1fr !important;
+			gap: 24px !important;
+		}
+		
+		.kt-footer-grid-responsive > div {
+			display: flex !important;
+			flex-direction: column !important;
+		}
+		
+		footer .mx-auto {
+			padding-left: 12px !important;
+			padding-right: 12px !important;
+		}
+	}
+	
+	@media (min-width: 769px) and (max-width: 1024px) {
+		.kt-footer-grid-responsive {
+			display: grid !important;
+			grid-template-columns: repeat(2, 1fr) !important;
+			gap: 30px !important;
+		}
+	}
+	
+	/* Remove overflow issues */
+	footer {
+		overflow-x: hidden !important;
+	}
+	
+	footer .mx-auto {
+		overflow-x: hidden !important;
+	}
+</style>
+
 <footer class="mt-10">
 	<!-- Social Media Bar -->
-	<div style="background-color: #EC234A; padding: 16px 0;">
-		<div class="mx-auto px-4" style="max-width: 1200px; width: 100%; box-sizing: border-box;">
-			<div class="flex items-center justify-between flex-wrap gap-4">
+	<div style="background-color: #EC234A; padding: 16px 0; overflow-x: hidden;">
+		<div style="max-width: 1200px; width: 100%; margin: 0 auto; padding: 0 12px; box-sizing: border-box;">
+			<div class="kt-social-bar" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px;">
 				<p style="color: white; font-size: 15px; margin: 0;">
 					<?php esc_html_e( 'Get connected with us on social networks:', 'astra-child' ); ?>
 				</p>
-				<div class="flex gap-4">
-					<a href="#" style="color: white; font-size: 18px; text-decoration: none; transition: all 0.3s ease;" class="hover:opacity-80" title="Facebook">
+				<div class="kt-social-icons" style="display: flex; gap: 4px;">
+					<a href="#" style="color: white; font-size: 18px; text-decoration: none; transition: all 0.3s ease; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;" class="hover:opacity-80" title="Facebook">
 						<i class="fab fa-facebook-f"></i>
 					</a>
-					<a href="#" style="color: white; font-size: 18px; text-decoration: none; transition: all 0.3s ease;" class="hover:opacity-80" title="Twitter">
-						<i class="fab fa-twitter"></i>
-					</a>
-					<a href="#" style="color: white; font-size: 18px; text-decoration: none; transition: all 0.3s ease;" class="hover:opacity-80" title="Google">
+					<a href="#" style="color: white; font-size: 18px; text-decoration: none; transition: all 0.3s ease; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;" class="hover:opacity-80" title="Google">
 						<i class="fab fa-google"></i>
 					</a>
-					<a href="#" style="color: white; font-size: 18px; text-decoration: none; transition: all 0.3s ease;" class="hover:opacity-80" title="Instagram">
+					<a href="#" style="color: white; font-size: 18px; text-decoration: none; transition: all 0.3s ease; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;" class="hover:opacity-80" title="Instagram">
 						<i class="fab fa-instagram"></i>
-					</a>
-					<a href="#" style="color: white; font-size: 18px; text-decoration: none; transition: all 0.3s ease;" class="hover:opacity-80" title="LinkedIn">
-						<i class="fab fa-linkedin-in"></i>
-					</a>
-					<a href="#" style="color: white; font-size: 18px; text-decoration: none; transition: all 0.3s ease;" class="hover:opacity-80" title="GitHub">
-						<i class="fab fa-github"></i>
 					</a>
 				</div>
 			</div>
@@ -44,9 +83,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<!-- Main Footer Content -->
-	<div style="background-color: #0F172A; padding: 48px 0;">
-		<div class="mx-auto px-4" style="max-width: 1200px; width: 100%; box-sizing: border-box;">
-			<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-bottom: 40px;">
+	<div style="background-color: #0F172A; padding: 48px 0; overflow-x: hidden;">
+		<div style="max-width: 1200px; width: 100%; margin: 0 auto; padding: 0 12px; box-sizing: border-box;">
+			<div class="kt-footer-grid-responsive" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-bottom: 40px;">
 				<!-- Company Info -->
 				<div>
 					<div style="display: flex; flex-direction: column; gap: 16px;">

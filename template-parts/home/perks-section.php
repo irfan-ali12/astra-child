@@ -130,17 +130,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 		</article>
 
-		<!-- Electronics Deals -->
+		<!-- Home Appliances Deals -->
 		<article class="flex items-center justify-between gap-4 rounded-3xl bg-gradient-to-br from-[#E0F2FF] to-[#F3FBFF] p-5 shadow-soft hover:shadow-lg transition">
 			<div>
-				<p class="text-xs font-semibold text-[#1A1A1D]"><?php esc_html_e( 'Electronics', 'astra-child' ); ?></p>
+				<p class="text-xs font-semibold text-[#1A1A1D]"><?php esc_html_e( 'Home Appliances', 'astra-child' ); ?></p>
 				<h3 class="text-sm font-extrabold"><?php esc_html_e( 'Just Launched', 'astra-child' ); ?></h3>
 				<p class="mt-2 text-sm font-extrabold text-[#EC234A]">35% OFF</p>
 			</div>
 			<img
 				class="h-24 w-auto object-contain"
-				src="http://kachotech.com/wp-content/uploads/2025/12/category-electronics.png"
-				alt="<?php esc_attr_e( 'Electronics', 'astra-child' ); ?>"
+				src="http://kachotech.com/wp-content/uploads/2025/12/category-home-appliances.png"
+				alt="<?php esc_attr_e( 'Home Appliances', 'astra-child' ); ?>"
 				loading="lazy"
 			/>
 		</article>

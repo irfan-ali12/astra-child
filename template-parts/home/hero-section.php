@@ -5,9 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Hero section: product carousel + rows with AJAX add-to-cart
 // Categories to show (slug => label)
 $categories = array(
-    'heaters'     => 'HEATERS',
-    'cosmetics'   => 'COSMETICS',
-    'electronics' => 'ELECTRONICS',
+    'heaters'   => 'HEATERS',
+    'cosmetics' => 'COSMETICS & PERSONAL CARE',
 );
 
 // Helper to get products for a category (falls back to recent products)
@@ -45,7 +44,7 @@ function kt_get_products_for_cat( $cat_slug, $limit = 6 ) {
 
 ?>
 
-<section class="kt-hero-bg min-h-screen overflow-hidden">
+<section class="kt-hero-bg overflow-hidden">
 
   <div class="mx-auto flex h-full flex-col" style="max-width: 1200px; padding: 0 16px; width: 100%; box-sizing: border-box;">
 
@@ -54,9 +53,9 @@ function kt_get_products_for_cat( $cat_slug, $limit = 6 ) {
       <!-- LEFT: tabs + social -->
       <aside class="hidden w-16 flex-col items-center justify-between py-4 lg:flex">
         <div class="flex flex-col items-center gap-10 text-xs font-semibold text-slate-500">
-          <button class="kt-tab kt-tab-active" data-kt-tab="0">HEATERS</button>
-          <button class="kt-tab" data-kt-tab="1">COSMETICS</button>
-          <button class="kt-tab" data-kt-tab="2">ELECTRONICS</button>
+          <button class="kt-tab kt-tab-active" data-kt-tab="0">APG GAS</button>
+          <button class="kt-tab" data-kt-tab="1">CORONA</button>
+          <button class="kt-tab" data-kt-tab="2">COSMETICS & PERSONAL CARE</button>
         </div>
         <div class="flex flex-col items-center gap-3 text-slate-400"><a href="#" class="hover:text-white" aria-label="Instagram">IG</a><a href="#" class="hover:text-white" aria-label="Facebook">f</a></div>
       </aside>
@@ -66,59 +65,184 @@ function kt_get_products_for_cat( $cat_slug, $limit = 6 ) {
 
         <!-- SLIDES -->
         <div class="relative flex-1 min-h-[200px] md:min-h-[320px] lg:min-h-[360px]">
-          <!-- HEATERS -->
-          <div class="kt-slide kt-slide-active" data-kt-slide="0">
-            <div class="grid h-full items-center gap-1 md:gap-8 grid-cols-[1.3fr_1fr] md:grid-cols-[1.1fr_minmax(0,1fr)]">
-              <div class="kt-anim-text space-y-6">
-                <h1 class="text-base md:text-5xl lg:text-6xl font-black text-white leading-tight">BORING <span class="text-kt-primary">ROOMS?</span></h1>
-                <p class="max-w-md text-xs md:text-base text-slate-300">Turn freezing nights into warm, cozy evenings with safe, fuel-efficient heaters curated for Pakistan's harsh winters.</p>
-                <div class="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-slate-300"><span>Starting from <span class="font-semibold text-white">Rs 2,499</span></span><span class="h-1 w-1 rounded-full bg-slate-500"></span><span>Extra <span class="font-semibold text-kt-primary">10% OFF</span></span></div>
-                <div class="flex flex-wrap items-center gap-2 md:gap-4 pt-1 md:pt-2"><a href="#" class="inline-flex items-center justify-center rounded-full bg-kt-primary px-2 md:px-6 py-1 md:py-3 text-xs md:text-sm font-semibold uppercase tracking-[.1em] md:tracking-[.2em] shadow-lg shadow-kt-primary/50 hover:bg-[#ff3b5b]">SHOP HEATERS</a></div>
-              </div>
+          <!-- HEATER 1: FREEZING NIGHTS -->
+<div class="kt-slide kt-slide-active" data-kt-slide="0">
+  <div class="grid h-full items-center gap-1 md:gap-8 grid-cols-[1.3fr_1fr] md:grid-cols-[1.1fr_minmax(0,1fr)]">
+    <div class="kt-anim-text space-y-6">
+      <h1 class="text-base md:text-5xl lg:text-6xl font-black text-white leading-tight">
+        FREEZING <span class="text-kt-primary">NIGHTS?</span>
+      </h1>
+      <p class="max-w-md text-xs md:text-base text-slate-300">
+        Turn freezing nights into warm, cozy evenings with safe, fuel-efficient heaters curated for Pakistan’s harsh winters.
+      </p>
+      <div class="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-slate-300">
+        <span>Starting from: <span class="font-semibold text-white">Rs 2,499</span></span>
+        <span class="h-1 w-1 rounded-full bg-slate-500"></span>
+        <span>Extra 10% OFF</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 md:gap-4 pt-1 md:pt-2">
+        <a href="<?php echo esc_url( get_term_link( 'heaters', 'product_cat' ) ); ?>"
+           class="inline-flex items-center justify-center rounded-full bg-kt-primary px-2 md:px-6 py-1 md:py-3 text-xs md:text-sm font-semibold uppercase tracking-[.1em] md:tracking-[.2em] shadow-lg shadow-kt-primary/50 hover:bg-[#ff3b5b]">
+          SHOP HEATERS
+        </a>
+      </div>
+    </div>
 
-              <div class="kt-anim-image relative flex items-center justify-center">
-                <div class="kt-arc absolute -right-6 top-4 h-60 w-60 md:h-72 md:w-72 border-slate-600/60"></div>
-                <div class="relative z-10 flex items-center justify-center rounded-[32px] bg-black/40 px-4 py-4 shadow-[0_40px_90px_rgba(0,0,0,.75)]">
-                  <div class="kt-product-visual flex items-center justify-center"><img src="http://localhost/kachotech/wp-content/uploads/2025/11/1243678-removebg-preview.png" alt="Heater" class="h-full w-full object-contain"></div>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div class="kt-anim-image relative flex items-center justify-center">
+      <div class="kt-arc absolute -right-6 top-4 h-60 w-60 md:h-72 md:w-72 border-slate-600/60"></div>
+      <div class="relative z-10 flex items-center justify-center rounded-[32px] bg-black/40 px-4 py-4 shadow-[0_40px_90px_rgba(0,0,0,.75)]">
+        <div class="kt-product-visual flex items-center justify-center">
+          <img src="http://kachotech.com/wp-content/uploads/2025/12/heater-hero-section.png"
+               alt="Winter Heaters for Freezing Nights" class="h-full w-full object-contain">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-          <!-- COSMETICS -->
-          <div class="kt-slide" data-kt-slide="1">
-            <div class="grid h-full items-center gap-1 md:gap-8 grid-cols-[1.3fr_1fr] md:grid-cols-[1.1fr_minmax(0,1fr)]">
-              <div class="kt-anim-text space-y-6">
-                <h2 class="text-base md:text-5xl lg:text-6xl font-black text-white leading-tight">DRY <span class="text-kt-primary">SKIN?</span></h2>
-                <p class="max-w-md text-xs md:text-base text-slate-300">Hydrating serums, moisturisers and makeup bundles that keep your skin glowing instead of cracking all winter.</p>
-                <div class="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-slate-300"><span>Bundles from <span class="font-semibold text-white">Rs 1,799</span></span><span class="h-1 w-1 rounded-full bg-slate-500"></span><span>Free mini serum</span></div>
-                <div class="flex flex-wrap items-center gap-2 md:gap-4 pt-1 md:pt-2"><a href="<?php echo esc_url( get_term_link( 'cosmetics', 'product_cat' ) ); ?>" class="inline-flex items-center justify-center rounded-full bg-kt-primary px-2 md:px-6 py-1 md:py-3 text-xs md:text-sm font-semibold uppercase tracking-[.1em] md:tracking-[.2em] shadow-lg shadow-kt-primary/50 hover:bg-[#ff3b5b]">SHOP COSMETICS</a></div>
-              </div>
-              <div class="kt-anim-image relative flex items-center justify-center">
-                <div class="kt-arc absolute -right-6 top-4 h-60 w-60 md:h-72 md:w-72 border-rose-400/70"></div>
-                <div class="relative z-10 flex items-center justify-center rounded-[32px] bg-black/40 px-4 py-4 shadow-[0_40px_90px_rgba(0,0,0,.75)]">
-                  <div class="kt-product-visual flex items-center justify-center"><img src="http://localhost/kachotech/wp-content/uploads/2025/11/bioxcin-whitening-face-cream-bioxsine-pure-white-whitening-face-cream-43085223330049-removebg-preview.png" alt="Cosmetics" class="h-full w-full object-contain"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- ELECTRONICS -->
-          <div class="kt-slide" data-kt-slide="2">
-            <div class="grid h-full items-center gap-1 md:gap-8 grid-cols-[1.3fr_1fr] md:grid-cols-[1.1fr_minmax(0,1fr)]">
-              <div class="kt-anim-text space-y-6">
-                <h2 class="text-base md:text-5xl lg:text-6xl font-black text-white leading-tight">DULL <span class="text-kt-primary">EVENINGS?</span></h2>
-                <p class="max-w-md text-xs md:text-base text-slate-300">Kettles, audio and smart gadgets for the perfect winter entertainment setup at home.</p>
-                <div class="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-slate-300"><span>Combos from <span class="font-semibold text-white">Rs 3,299</span></span><span class="h-1 w-1 rounded-full bg-slate-500"></span><span>Save up to <span class="font-semibold">25%</span></span></div>
-                <div class="flex flex-wrap items-center gap-2 md:gap-4 pt-1 md:pt-2"><a href="<?php echo esc_url( get_term_link( 'electronics', 'product_cat' ) ); ?>" class="inline-flex items-center justify-center rounded-full bg-kt-primary px-2 md:px-6 py-1 md:py-3 text-xs md:text-sm font-semibold uppercase tracking-[.1em] md:tracking-[.2em] shadow-lg shadow-kt-primary/50 hover:bg-[#ff3b5b]">BROWSE ELECTRONICS</a></div>
-              </div>
-              <div class="kt-anim-image relative flex items-center justify-center">
-                <div class="kt-arc absolute -right-6 top-4 h-60 w-60 md:h-72 md:w-72 border-sky-400/70"></div>
-                <div class="relative z-10 flex items-center justify-center rounded-[32px] bg-black/40 px-4 py-4 shadow-[0_40px_90px_rgba(0,0,0,.75)]">
-                  <div class="kt-product-visual flex items-center justify-center"><img src="http://localhost/kachotech/wp-content/uploads/2025/11/71drPES0yyL._UF1000_1000_QL80_-removebg-preview.png" alt="Electronics combo" class="h-full w-full object-contain"></div>
-                </div>
-              </div>
-            </div>
-          </div>
+<!-- HEATER 2: COLD BEDROOMS (APG IMAGE) -->
+<div class="kt-slide" data-kt-slide="1">
+  <div class="grid h-full items-center gap-1 md:gap-8 grid-cols-[1.3fr_1fr] md:grid-cols-[1.1fr_minmax(0,1fr)]">
+    <div class="kt-anim-text space-y-6">
+      <h2 class="text-base md:text-5xl lg:text-6xl font-black text-white leading-tight">
+        COLD <span class="text-kt-primary">BEDROOMS?</span>
+      </h2>
+      <p class="max-w-md text-xs md:text-base text-slate-300">
+        Powerful heaters that warm up bedrooms in minutes, with smart fuel usage for all-night comfort.
+      </p>
+      <div class="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-slate-300">
+        <span>Deals from: <span class="font-semibold text-white">Rs 3,199</span></span>
+        <span class="h-1 w-1 rounded-full bg-slate-500"></span>
+        <span>Free heat guard mat</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 md:gap-4 pt-1 md:pt-2">
+        <a href="<?php echo esc_url( get_term_link( 'heaters', 'product_cat' ) ); ?>"
+           class="inline-flex items-center justify-center rounded-full bg-kt-primary px-2 md:px-6 py-1 md:py-3 text-xs md:text-sm font-semibold uppercase tracking-[.1em] md:tracking-[.2em] shadow-lg shadow-kt-primary/50 hover:bg-[#ff3b5b]">
+          BUY HEATERS
+        </a>
+      </div>
+    </div>
+
+    <div class="kt-anim-image relative flex items-center justify-center">
+      <div class="kt-arc absolute -right-6 top-4 h-60 w-60 md:h-72 md:w-72 border-amber-400/70"></div>
+      <div class="relative z-10 flex items-center justify-center rounded-[32px] bg-black/40 px-4 py-4 shadow-[0_40px_90px_rgba(0,0,0,.75)]">
+        <div class="kt-product-visual flex items-center justify-center">
+          <img src="http://kachotech.com/wp-content/uploads/2025/12/APG-3000S-heater-cooker.png"
+               alt="APG Gas Heater & Cooker" class="h-full w-full object-contain">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HEATER 3: CHILLY MORNINGS (CATEGORY HEATER) -->
+<div class="kt-slide" data-kt-slide="2">
+  <div class="grid h-full items-center gap-1 md:gap-8 grid-cols-[1.3fr_1fr] md:grid-cols-[1.1fr_minmax(0,1fr)]">
+    <div class="kt-anim-text space-y-6">
+      <h2 class="text-base md:text-5xl lg:text-6xl font-black text-white leading-tight">
+        CHILLY <span class="text-kt-primary">MORNINGS?</span>
+      </h2>
+      <p class="max-w-md text-xs md:text-base text-slate-300">
+        Start your day in a warm room with fast-heating, low-maintenance heaters perfect for homes and small shops.
+      </p>
+      <div class="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-slate-300">
+        <span>From: <span class="font-semibold text-white">Rs 2,799</span></span>
+        <span class="h-1 w-1 rounded-full bg-slate-500"></span>
+        <span>Save up to 12%</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 md:gap-4 pt-1 md:pt-2">
+        <a href="<?php echo esc_url( get_term_link( 'heaters', 'product_cat' ) ); ?>"
+           class="inline-flex items-center justify-center rounded-full bg-kt-primary px-2 md:px-6 py-1 md:py-3 text-xs md:text-sm font-semibold uppercase tracking-[.1em] md:tracking-[.2em] shadow-lg shadow-kt-primary/50 hover:bg-[#ff3b5b]">
+          EXPLORE HEATERS
+        </a>
+      </div>
+    </div>
+
+    <div class="kt-anim-image relative flex items-center justify-center">
+      <div class="kt-arc absolute -right-6 top-4 h-60 w-60 md:h-72 md:w-72 border-slate-600/60"></div>
+      <div class="relative z-10 flex items-center justify-center rounded-[32px] bg-black/40 px-4 py-4 shadow-[0_40px_90px_rgba(0,0,0,.75)]">
+        <div class="kt-product-visual flex items-center justify-center">
+          <img src="http://kachotech.com/wp-content/uploads/2025/12/category-heater.png"
+               alt="Heater Category Products" class="h-full w-full object-contain">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COSMETICS: DRY SKIN -->
+<div class="kt-slide" data-kt-slide="3">
+  <div class="grid h-full items-center gap-1 md:gap-8 grid-cols-[1.3fr_1fr] md:grid-cols-[1.1fr_minmax(0,1fr)]">
+    <div class="kt-anim-text space-y-6">
+      <h2 class="text-base md:text-5xl lg:text-6xl font-black text-white leading-tight">
+        DRY <span class="text-kt-primary">SKIN?</span>
+      </h2>
+      <p class="max-w-md text-xs md:text-base text-slate-300">
+        Hydrating serums, moisturisers and makeup bundles that keep your skin glowing instead of cracking all winter.
+      </p>
+      <div class="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-slate-300">
+        <span>Bundles from: <span class="font-semibold text-white">Rs 1,799</span></span>
+        <span class="h-1 w-1 rounded-full bg-slate-500"></span>
+        <span>Free mini serum</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 md:gap-4 pt-1 md:pt-2">
+        <a href="<?php echo esc_url( get_term_link( 'cosmetics-personal-care', 'product_cat' ) ); ?>"
+           class="inline-flex items-center justify-center rounded-full bg-kt-primary px-2 md:px-6 py-1 md:py-3 text-xs md:text-sm font-semibold uppercase tracking-[.1em] md:tracking-[.2em] shadow-lg shadow-kt-primary/50 hover:bg-[#ff3b5b]">
+          SHOP COSMETICS & PERSONAL CARE
+        </a>
+      </div>
+    </div>
+
+    <div class="kt-anim-image relative flex items-center justify-center">
+      <div class="kt-arc absolute -right-6 top-4 h-60 w-60 md:h-72 md:w-72 border-rose-400/70"></div>
+      <div class="relative z-10 flex items-center justify-center rounded-[32px] bg-black/40 px-4 py-4 shadow-[0_40px_90px_rgba(0,0,0,.75)]">
+        <div class="kt-product-visual flex items-center justify-center">
+          <img src="http://kachotech.com/wp-content/uploads/2025/12/cosmatics-hero-section.png"
+               alt="Winter Cosmetics and Skincare" class="h-full w-full object-contain">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- COSMETICS: DRY SKIN -->
+<div class="kt-slide" data-kt-slide="3">
+  <div class="grid h-full items-center gap-1 md:gap-8 grid-cols-[1.3fr_1fr] md:grid-cols-[1.1fr_minmax(0,1fr)]">
+    <div class="kt-anim-text space-y-6">
+      <h2 class="text-base md:text-5xl lg:text-6xl font-black text-white leading-tight">
+        WINTER <span class="text-kt-primary">COOKING?</span>
+      </h2>
+      <p class="max-w-md text-xs md:text-base text-slate-300">
+        Hydrating serums, moisturisers and makeup bundles that keep your skin glowing instead of cracking all winter.
+      </p>
+      <div class="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-slate-300">
+        <span>Bundles from: <span class="font-semibold text-white">Rs 1,799</span></span>
+        <span class="h-1 w-1 rounded-full bg-slate-500"></span>
+        <span>Free mini serum</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 md:gap-4 pt-1 md:pt-2">
+        <a href="<?php echo esc_url( get_term_link( 'home-appliances', 'product_cat' ) ); ?>"
+           class="inline-flex items-center justify-center rounded-full bg-kt-primary px-2 md:px-6 py-1 md:py-3 text-xs md:text-sm font-semibold uppercase tracking-[.1em] md:tracking-[.2em] shadow-lg shadow-kt-primary/50 hover:bg-[#ff3b5b]">
+          SHOP APPLIANCES
+        </a>
+      </div>
+    </div>
+
+    <div class="kt-anim-image relative flex items-center justify-center">
+      <div class="kt-arc absolute -right-6 top-4 h-60 w-60 md:h-72 md:w-72 border-rose-400/70"></div>
+      <div class="relative z-10 flex items-center justify-center rounded-[32px] bg-black/40 px-4 py-4 shadow-[0_40px_90px_rgba(0,0,0,.75)]">
+        <div class="kt-product-visual flex items-center justify-center">
+          <img src="http://kachotech.com/wp-content/uploads/2025/12/category-home-appliences.png"
+               alt="Winter Cosmetics and Skincare" class="h-full w-full object-contain">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
         </div>
 
         <!-- bottom products + NEXT -->

@@ -97,6 +97,14 @@ function kachotech_child_enqueue_scripts() {
 			'1.0'
 		);
 
+		// Category Strip styles (Shop Deals by Category section)
+		wp_enqueue_style(
+			'kt-category-strip-css',
+			get_stylesheet_directory_uri() . '/assets/css/category-strip.css',
+			array( 'kachotech-homepage-css' ),
+			'1.0'
+		);
+
 		// Hero JS (carousel + add-to-cart)
 		wp_enqueue_script(
 			'kt-hero-js',
@@ -137,18 +145,18 @@ function kachotech_child_enqueue_scripts() {
 
 	// Single product page scripts and styles
 	if ( is_product() ) {
-		// Load shop layout CSS so related products have proper styling
+		// Load homepage CSS for related products grid styling
 		wp_enqueue_style(
-			'kt-shop-layout-css',
-			get_stylesheet_directory_uri() . '/assets/css/shop-layout.css',
+			'kachotech-homepage-css',
+			get_stylesheet_directory_uri() . '/assets/css/homepage.css',
 			array( 'kachotech-child-css' ),
 			'1.0'
 		);
 
-		// Related products CSS to match shop page design
+		// Load shop layout CSS so related products have proper styling
 		wp_enqueue_style(
-			'kt-related-products-css',
-			get_stylesheet_directory_uri() . '/assets/css/related-products.css',
+			'kt-shop-layout-css',
+			get_stylesheet_directory_uri() . '/assets/css/shop-layout.css',
 			array( 'kachotech-child-css' ),
 			'1.0'
 		);

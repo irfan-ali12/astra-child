@@ -112,12 +112,6 @@ get_header();
     padding-left: 5px;
 }
 
-  .kt-single-post .kt-wrap {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 0 16px;
-  }
-
   /* Breadcrumb */
   .kt-single-post .kt-breadcrumb {
     font-size: 13px;
@@ -711,7 +705,7 @@ get_header();
 </style>
 
 <div class="kt-single-post">
-  <div class="kt-wrap">
+  <div class="ast-container">
 
     <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
@@ -1024,7 +1018,7 @@ get_header();
 
     <?php endwhile; endif; ?>
 
-  </div><!-- .kt-wrap -->
+  </div><!-- .ast-container -->
 </div><!-- .kt-single-post -->
 
 <?php

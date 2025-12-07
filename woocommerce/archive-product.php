@@ -196,6 +196,77 @@ if ( isset( $_GET['s'] ) && ! empty( $_GET['s'] ) ) {
 }
 
 $initial_query = new WP_Query($initial_args);
+
+// Apply smart sorting to initial query (same as AJAX handler)
+if ( ! isset( $_GET['s'] ) || empty( $_GET['s'] ) ) {
+	// Collect all products with their metadata for custom sorting
+	$product_list = array();
+	foreach ( $initial_query->posts as $post ) {
+		$product = wc_get_product( $post->ID );
+		if ( ! $product ) {
+			continue;
+		}
+		
+		// Check if product is in heaters category
+		$product_cats = $product->get_category_ids();
+		$is_heater = false;
+		
+		if ( ! empty( $product_cats ) ) {
+			foreach ( $product_cats as $cat_id ) {
+				$cat = get_term( $cat_id, 'product_cat' );
+				if ( $cat && ! is_wp_error( $cat ) && 'heaters' === $cat->slug ) {
+					$is_heater = true;
+					break;
+				}
+			}
+		}
+		
+		$rating = (float) $product->get_average_rating();
+		$has_rating = $rating > 0;
+		
+		$product_list[] = array(
+			'post'        => $post,
+			'rating'      => $rating,
+			'is_heater'   => $is_heater,
+			'has_rating'  => $has_rating,
+		);
+	}
+	
+	// Sort products by rating and Heater priority
+	usort( $product_list, function( $a, $b ) {
+		$a_has_rating = $a['has_rating'];
+		$b_has_rating = $b['has_rating'];
+		
+		// Rated products come first
+		if ( $a_has_rating !== $b_has_rating ) {
+			return $a_has_rating ? -1 : 1;
+		}
+		
+		// Among rated products: sort by rating (highest first)
+		if ( $a_has_rating && $b_has_rating ) {
+			if ( $a['rating'] !== $b['rating'] ) {
+				return $b['rating'] <=> $a['rating'];
+			}
+			// If ratings are equal, heaters come first
+			if ( $a['is_heater'] !== $b['is_heater'] ) {
+				return $a['is_heater'] ? -1 : 1;
+			}
+		}
+		
+		// Among unrated products: heaters come first
+		if ( ! $a_has_rating && ! $b_has_rating ) {
+			if ( $a['is_heater'] !== $b['is_heater'] ) {
+				return $a['is_heater'] ? -1 : 1;
+			}
+		}
+		
+		return 0;
+	} );
+	
+	// Replace query posts with sorted posts
+	$initial_query->posts = array_column( $product_list, 'post' );
+}
+
 $total_products = $initial_query->found_posts;
 
 // Replace the main query with our filtered query

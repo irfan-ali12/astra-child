@@ -388,7 +388,8 @@ var priceMax = sliderValue;
         paged: currentFilters.paged,
         nonce: ktShopAjax.nonce,
         category_id: typeof ktShopAjax.category_id !== 'undefined' ? ktShopAjax.category_id : 0,
-        is_category_page: typeof ktShopAjax.is_category_page !== 'undefined' ? ktShopAjax.is_category_page : false
+        is_category_page: typeof ktShopAjax.is_category_page !== 'undefined' ? ktShopAjax.is_category_page : false,
+        timestamp: Date.now()  // Cache buster
       };
 
       console.log('Sending Filter Data:', filterData);

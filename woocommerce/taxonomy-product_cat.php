@@ -21,8 +21,8 @@ $category_image = $category_image_id ? wp_get_attachment_url( $category_image_id
  */
 $category_colors = array(
     'heaters' => array( 'bg' => '#F39C12', 'text' => '#FFFFFF', 'secondary' => '#FF8E8E' ),
-    'cosmetics' => array( 'bg' => '#FF69B4', 'text' => '#FFFFFF', 'secondary' => '#FF85C0' ),
-    'electronics' => array( 'bg' => '#4ECDC4', 'text' => '#FFFFFF', 'secondary' => '#6BE3DB' ),
+    'cosmetics-personal-care' => array( 'bg' => '#FF69B4', 'text' => '#FFFFFF', 'secondary' => '#FF85C0' ),
+    'home-appliances' => array( 'bg' => '#4ECDC4', 'text' => '#FFFFFF', 'secondary' => '#6BE3DB' ),
     'personal-care' => array( 'bg' => '#9B59B6', 'text' => '#FFFFFF', 'secondary' => '#B370CC' ),
     'home' => array( 'bg' => '#F39C12', 'text' => '#FFFFFF', 'secondary' => '#F5B041' ),
     'sports' => array( 'bg' => '#1ABC9C', 'text' => '#FFFFFF', 'secondary' => '#48D1C3' ),
@@ -609,40 +609,73 @@ if ( $current_orderby && $current_orderby !== 'date' ) {
                                     if ( $review_count > 0 ) {
                                         echo '(' . esc_html( $review_count ) . ')';
                                     } else {
-                                        echo 'No reviews';
+                                        echo 'No reviews yet';
                                     }
                                     ?>
                                 </span>
                             </div>
 
-                            <!-- PRODUCT NAME & DESCRIPTION -->
-                            <h3 class="kt-product-name">
-                                <a href="<?php the_permalink(); ?>">
+                            <!-- CATEGORY -->
+                            <div class="kt-category">
+                                <?php
+                                $product_cats = $product->get_category_ids();
+                                if ( ! empty( $product_cats ) ) {
+                                    $cat = get_term( $product_cats[0], 'product_cat' );
+                                    if ( $cat && ! is_wp_error( $cat ) ) {
+                                        echo esc_html( $cat->name );
+                                    }
+                                }
+                                ?>
+                            </div>
+
+                            <!-- TITLE -->
+                            <h3 class="kt-title">
+                                <a href="<?php echo esc_url( $product->get_permalink() ); ?>">
                                     <?php echo esc_html( $title ); ?>
                                 </a>
                             </h3>
-                            <p class="kt-product-description"><?php echo esc_html( $description ); ?></p>
 
                             <!-- PRICE -->
                             <div class="kt-price-row">
-                                <?php if ( $on_sale ) : ?>
-                                    <span class="kt-sale-price">Rs <?php echo esc_html( number_format( $sale_price, 2 ) ); ?></span>
-                                    <span class="kt-original-price">Rs <?php echo esc_html( number_format( $price, 2 ) ); ?></span>
-                                    <?php
-                                    $discount = round( ( ( $price - $sale_price ) / $price ) * 100 );
-                                    echo '<span class="kt-discount">-' . esc_html( $discount ) . '%</span>';
-                                    ?>
+                                <?php if ( $on_sale && $sale_price ) : ?>
+                                    <span class="kt-price-current">Rs <?php echo esc_html( number_format( (float) $sale_price, 0, '.', ',' ) ); ?></span>
+                                    <span class="kt-price-old">Rs <?php echo esc_html( number_format( (float) $price, 0, '.', ',' ) ); ?></span>
                                 <?php else : ?>
-                                    <span class="kt-sale-price">Rs <?php echo esc_html( number_format( $price, 2 ) ); ?></span>
+                                    <span class="kt-price-current">Rs <?php echo esc_html( number_format( (float) $price, 0, '.', ',' ) ); ?></span>
                                 <?php endif; ?>
                             </div>
 
-                            <!-- ADD TO CART BUTTON -->
-                            <form class="cart" action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post" enctype="multipart/form-data">
-                                <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product_id ); ?>" class="kt-add-to-cart-btn">
-                                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                                </button>
-                            </form>
+                            <!-- AVAILABILITY -->
+                            <div class="kt-availability <?php echo $in_stock ? 'in-stock' : 'out-of-stock'; ?>">
+                                <?php
+                                $stock = $product->get_stock_quantity();
+                                if ( $in_stock && $stock ) {
+                                    echo 'Available: ' . esc_html( (int) $stock ) . ' pcs';
+                                } elseif ( $in_stock ) {
+                                    echo 'Available';
+                                } else {
+                                    echo 'Out of Stock';
+                                }
+                                ?>
+                            </div>
+
+                            <!-- FOOTER BUTTONS -->
+                            <div class="kt-footer-actions">
+                                <?php if ( $in_stock ) : ?>
+                                    <a
+                                        href="<?php echo esc_url( $product->add_to_cart_url() ); ?>"
+                                        data-product_id="<?php echo esc_attr( $product_id ); ?>"
+                                        class="kt-btn-cart add_to_cart_button ajax_add_to_cart"
+                                    >
+                                        Add to Cart
+                                    </a>
+                                <?php else : ?>
+                                    <button class="kt-btn-cart" disabled>Add to Cart</button>
+                                <?php endif; ?>
+                                <a href="<?php echo esc_url( $product->get_permalink() ); ?>" class="kt-btn-details" title="View Details">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
                         </div>
                         <?php
                     }

@@ -5,7 +5,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-get_header( 'shop' );
+get_header();
 
 $product = wc_get_product( get_the_ID() );
 
@@ -66,7 +66,7 @@ $first_src = $image_urls[0];
   .kt-product-page {
     font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     background: #f8fafc; /* slate-50 */
-    padding: 32px 0 48px;
+    padding: 80px 0 48px;
   }
 
   /* Breadcrumb */
@@ -230,10 +230,10 @@ $first_src = $image_urls[0];
 
   /* Title */
   .kt-product-page .kt-title {
-    font-size: 26px;
-    line-height: 1.25;
+    font-size: 15px;
+    line-height: 1.3;
     font-weight: 600;
-    margin: 0 0 8px;
+    margin: 0px;
     color: #0f172a; /* slate-900 */
   }
 
@@ -299,8 +299,7 @@ $first_src = $image_urls[0];
   .kt-product-page .kt-price-row {
     display: flex;
     align-items: baseline;
-    gap: 12px;
-    margin: 10px 0 4px;
+    gap: 10px;
   }
 
   .kt-product-page .kt-price {
@@ -560,14 +559,20 @@ $first_src = $image_urls[0];
 
   /* Related products - now using custom template with shop card design */
   .kt-product-page .kt-related {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 16px;
+    max-width: 100%;
+    margin: 0;
+    width: 100%;
   }
 
   .kt-product-page .kt-related .kt-related-wrapper {
     margin-top: 48px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
   }
+
+  /* Grid styling is handled by homepage.css */
 
   /* Hide default WooCommerce related products markup if any */
   .kt-product-page .kt-related ul.products,
@@ -609,8 +614,7 @@ $first_src = $image_urls[0];
       padding: 0 16px;
     }
     .kt-product-page .kt-product-grid,
-    .kt-product-page .kt-tabs,
-    .kt-product-page .kt-related {
+    .kt-product-page .kt-tabs {
       padding: 0 16px;
     }
 

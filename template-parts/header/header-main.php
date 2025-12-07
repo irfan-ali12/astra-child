@@ -95,7 +95,7 @@ if ( taxonomy_exists( 'product_cat' ) ) {
                                 <?php else : ?>
                                     <li data-slug="heaters">Heaters</li>
                                     <li data-slug="electronics">Electronics</li>
-                                    <li data-slug="cosmetics">Cosmetics</li>
+                                    <li data-slug="cosmetics-personal-care">Cosmetics & Personal Care</li>
                                     <li data-slug="kitchen">Kitchen</li>
                                 <?php endif; ?>
                             </ul>

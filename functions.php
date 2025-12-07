@@ -124,12 +124,21 @@ add_action( 'wp_ajax_kt_load_featured_products', 'kt_load_featured_products' );
 add_action( 'wp_ajax_nopriv_kt_load_featured_products', 'kt_load_featured_products' );
 
 function kt_load_featured_products() {
+	// Disable LiteSpeed Cache for this AJAX request
+	if ( function_exists( 'do_action' ) ) {
+		do_action( 'litespeed_control_set_cacheable', false );
+	}
+	
+	// Disable browser cache
+	header( 'Cache-Control: no-store, no-cache, must-revalidate, max-age=0' );
+	header( 'Pragma: no-cache' );
+	
 	$category = isset( $_POST['category'] ) ? sanitize_text_field( $_POST['category'] ) : 'all';
 
 	// Build query args
 	$args = array(
 		'post_type'      => 'product',
-		'posts_per_page' => 8,
+		'posts_per_page' => -1,  // Get all products for sorting
 		'orderby'        => 'date',
 		'order'          => 'DESC',
 	);
@@ -152,11 +161,78 @@ function kt_load_featured_products() {
 		wp_die();
 	}
 
-	// Build HTML matching related products design
-	$html = '';
+	// Collect products for sorting
+	$product_list = array();
 	while ( $products->have_posts() ) {
 		$products->the_post();
-		$product     = wc_get_product( get_the_ID() );
+		$product = wc_get_product( get_the_ID() );
+		
+		// Check if product is in heaters category
+		$product_cats = $product->get_category_ids();
+		$is_heater = false;
+		
+		if ( ! empty( $product_cats ) ) {
+			foreach ( $product_cats as $cat_id ) {
+				$cat = get_term( $cat_id, 'product_cat' );
+				if ( $cat && ! is_wp_error( $cat ) && 'heaters' === $cat->slug ) {
+					$is_heater = true;
+					break;
+				}
+			}
+		}
+		
+		$rating = (float) $product->get_average_rating();
+		$has_rating = $rating > 0;
+		
+		$product_list[] = array(
+			'product'     => $product,
+			'rating'      => $rating,
+			'is_heater'   => $is_heater,
+			'has_rating'  => $has_rating,
+		);
+	}
+
+	// Sort products when 'all' is selected
+	if ( 'all' === $category ) {
+		usort( $product_list, function( $a, $b ) {
+			// Separate products into rated and unrated
+			$a_has_rating = $a['has_rating'];
+			$b_has_rating = $b['has_rating'];
+			
+			// Rated products come first
+			if ( $a_has_rating !== $b_has_rating ) {
+				return $a_has_rating ? -1 : 1;
+			}
+			
+			// Among rated products: sort by rating (highest first)
+			if ( $a_has_rating && $b_has_rating ) {
+				if ( $a['rating'] !== $b['rating'] ) {
+					return $b['rating'] <=> $a['rating'];
+				}
+				// If ratings are equal, heaters come first
+				if ( $a['is_heater'] !== $b['is_heater'] ) {
+					return $a['is_heater'] ? -1 : 1;
+				}
+			}
+			
+			// Among unrated products: heaters come first
+			if ( ! $a_has_rating && ! $b_has_rating ) {
+				if ( $a['is_heater'] !== $b['is_heater'] ) {
+					return $a['is_heater'] ? -1 : 1;
+				}
+			}
+			
+			return 0;
+		} );
+	}
+
+	// Limit to 8 products for display
+	$product_list = array_slice( $product_list, 0, 8 );
+
+	// Build HTML matching related products design
+	$html = '';
+	foreach ( $product_list as $item ) {
+		$product     = $item['product'];
 		$product_id  = $product->get_id();
 		$title       = $product->get_name();
 		$price       = $product->get_regular_price();

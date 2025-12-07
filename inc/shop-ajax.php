@@ -11,6 +11,15 @@ defined( 'ABSPATH' ) || exit;
  * AJAX endpoint for filtering products
  */
 function kt_filter_products_ajax() {
+    // Disable LiteSpeed Cache for this AJAX request
+    if ( function_exists( 'do_action' ) ) {
+        do_action( 'litespeed_control_set_cacheable', false );
+    }
+    
+    // Disable browser cache
+    header( 'Cache-Control: no-store, no-cache, must-revalidate, max-age=0' );
+    header( 'Pragma: no-cache' );
+    
     // Verify nonce
     if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'kt_filter_nonce' ) ) {
         wp_send_json_error( array( 'message' => 'Security check failed' ) );
@@ -202,6 +211,77 @@ function kt_filter_products_ajax() {
 
     // Query products
     $query = new WP_Query( $args );
+
+    // Apply smart sorting when NO category filter is applied (default shop view)
+    // Priority: Rated products first (by rating DESC), then unrated, with Heaters prioritized in each group
+    if ( empty( $cat_array ) && ! $is_category_page ) {
+        // Collect all products with their metadata for custom sorting
+        $product_list = array();
+        foreach ( $query->posts as $post ) {
+            $product = wc_get_product( $post->ID );
+            if ( ! $product ) {
+                continue;
+            }
+            
+            // Check if product is in heaters category
+            $product_cats = $product->get_category_ids();
+            $is_heater = false;
+            
+            if ( ! empty( $product_cats ) ) {
+                foreach ( $product_cats as $cat_id ) {
+                    $cat = get_term( $cat_id, 'product_cat' );
+                    if ( $cat && ! is_wp_error( $cat ) && 'heaters' === $cat->slug ) {
+                        $is_heater = true;
+                        break;
+                    }
+                }
+            }
+            
+            $rating = (float) $product->get_average_rating();
+            $has_rating = $rating > 0;
+            
+            $product_list[] = array(
+                'post'        => $post,
+                'rating'      => $rating,
+                'is_heater'   => $is_heater,
+                'has_rating'  => $has_rating,
+            );
+        }
+        
+        // Sort products by rating and Heater priority
+        usort( $product_list, function( $a, $b ) {
+            $a_has_rating = $a['has_rating'];
+            $b_has_rating = $b['has_rating'];
+            
+            // Rated products come first
+            if ( $a_has_rating !== $b_has_rating ) {
+                return $a_has_rating ? -1 : 1;
+            }
+            
+            // Among rated products: sort by rating (highest first)
+            if ( $a_has_rating && $b_has_rating ) {
+                if ( $a['rating'] !== $b['rating'] ) {
+                    return $b['rating'] <=> $a['rating'];
+                }
+                // If ratings are equal, heaters come first
+                if ( $a['is_heater'] !== $b['is_heater'] ) {
+                    return $a['is_heater'] ? -1 : 1;
+                }
+            }
+            
+            // Among unrated products: heaters come first
+            if ( ! $a_has_rating && ! $b_has_rating ) {
+                if ( $a['is_heater'] !== $b['is_heater'] ) {
+                    return $a['is_heater'] ? -1 : 1;
+                }
+            }
+            
+            return 0;
+        } );
+        
+        // Replace query posts with sorted posts
+        $query->posts = array_column( $product_list, 'post' );
+    }
 
     // Apply rating filter in PHP (since WooCommerce stores ratings in postmeta)
     $filtered_posts = $query->posts;

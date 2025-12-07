@@ -97,7 +97,7 @@ button.kt-add-to-cart.font-semibold.text-kt-primary:hover {
 .kt-tab{ writing-mode:vertical-rl; transform:rotate(180deg); letter-spacing:.18em; transition:color 120ms ease; }
 .kt-tab-active{ color:#ff2446; }
 
-.kt-arc{ border-radius:999px; border:1px solid rgba(148,163,184,.35); }
+.kt-arc{ border-radius:999px; border:2px solid rgba(148,163,184,.35); }
 .kt-product-visual{ width:320px; height:240px; }
 @media (min-width:768px){ .kt-product-visual{ width:380px; height:280px; } }
 
@@ -171,7 +171,6 @@ a.inline-flex:active {
 .kt-anim-image .kt-visual-card{ background:linear-gradient(180deg, rgba(2,6,23,.9), rgba(2,6,23,.85)); border-radius:28px; padding:28px; display:flex; align-items:center; justify-content:center; box-shadow:0 40px 120px rgba(2,6,23,.7); }
 .kt-anim-image .kt-visual-card:before{ content:""; position:absolute; right:6%; top:8%; width:420px; height:320px; border-radius:28px; background:rgba(0,0,0,.25); z-index:1; }
 .kt-anim-image .kt-product-visual{ position:relative; z-index:3; }
-.kt-anim-image::after{ content:""; position:absolute; right:0; top:18%; width:360px; height:360px; border-radius:50%; border:2px solid rgba(21,127,152,0.18); transform:translate(18px,-16px); z-index:2; }
 
 /* Product row cards: darker with inset shadow and small thumbnail */
 .kt-products-row .kt-product-card{ background:linear-gradient(180deg, rgba(6,10,18,.9), rgba(3,6,11,.85)); border-radius:14px; padding:12px; display:flex; align-items:center; gap:12px; box-shadow: inset 0 1px 0 rgba(255,255,255,.02), 0 10px 30px rgba(2,6,23,.7); }
@@ -218,7 +217,7 @@ a.inline-flex:active {
 @media (max-width:767px){
   .kt-hero-title-line-1{ font-size:32px; }
   .kt-hero-title-line-2{ font-size:40px; }
-  .kt-anim-image::after{ display:none; }
+
   
   /* Hide arc on mobile */
   .kt-arc{ display:none; }
@@ -329,11 +328,11 @@ a.inline-flex:active {
   
   /* Moderate h1 title size on mobile */
   .kt-anim-text h1 {
-    font-size: 44px !important;
+    font-size: 36px !important;
   }
   
   .kt-anim-text h2 {
-    font-size: 44px !important;
+    font-size: 36px !important;
   }
   
   /* Increase CTA button size on mobile */

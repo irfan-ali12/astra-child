@@ -197,7 +197,6 @@ input.kt-search-input {
     display: flex;
     justify-content: space-between;
     gap: 12px;
-    padding: 8px 15px;
     height: 60px;
 }
 
@@ -301,11 +300,13 @@ body.kt-menu-open .kt-primary-menu li a { color: #fff; font-size: 16px; }
     flex: 1;
     display: flex;
     justify-content: center;
+    overflow: visible;
 }
 
 .kt-search-form {
     width: 100%;
     max-width: 780px;
+    overflow: visible;
 }
 
 .kt-search-inner {
@@ -313,7 +314,7 @@ body.kt-menu-open .kt-primary-menu li a { color: #fff; font-size: 16px; }
     align-items: stretch;
     width: 100%;
     border-radius: 28px;
-    overflow: hidden;
+    overflow: visible;
     border: 1px solid rgba(255,255,255,0.1);
     background: rgba(255,255,255,0.08);
     backdrop-filter: blur(4px);
@@ -339,7 +340,10 @@ body.kt-menu-open .kt-primary-menu li a { color: #fff; font-size: 16px; }
     cursor: pointer;
     height: 100%;
 }
-
+.kt-search-cat-toggle:hover {
+    color: #ec234a;
+    background-color: #02061700;
+}
 .kt-search-cat-icon svg {
     width: 16px;
     height: 16px;
@@ -365,7 +369,7 @@ body.kt-menu-open .kt-primary-menu li a { color: #fff; font-size: 16px; }
     border-radius: 8px;
     border: 1px solid #e4e6ec;
     box-shadow: 0 10px 25px rgba(15, 18, 32, 0.12);
-    z-index: 50;
+    z-index: 1000;
 }
 
 .kt-search-cat-menu ul {
@@ -586,7 +590,7 @@ body.kt-menu-open .kt-primary-menu li a { color: #fff; font-size: 16px; }
     border-radius: 999px;
     border: 1px solid #e4e6ec;
     background: #ffffff;
-    overflow: hidden;
+    overflow: visible;
 }
 
 /* Category pill */
@@ -604,7 +608,6 @@ body.kt-menu-open .kt-primary-menu li a { color: #fff; font-size: 16px; }
     gap: 8px;
     padding: 0 18px;
     border: 0;
-    background: #ffffff;
     font-size: 14px;
     color: #4b5563;
     cursor: pointer;
@@ -630,7 +633,7 @@ body.kt-menu-open .kt-primary-menu li a { color: #fff; font-size: 16px; }
     border-radius: 12px;
     box-shadow: 0 16px 40px rgba(15, 18, 32, 0.1);
     border: 1px solid #e4e6ec;
-    z-index: 70;
+    z-index: 1000;
     min-width: 220px;
 }
 
@@ -715,6 +718,7 @@ body.kt-menu-open .kt-primary-menu li a { color: #fff; font-size: 16px; }
 
 .kt-search-form-wrap {
     position: relative;
+    overflow: visible;
 }
 
 .kt-search-suggestions {
